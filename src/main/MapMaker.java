@@ -5,16 +5,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import model.Restaurant;
-
 public class MapMaker {
-	public static Map<String, Map<String, Map<String, Integer>>> makeCountMap(List<Restaurant> input) {
+	
+	
+	public static Map<String, Map<String, Map<String, Integer>>> makeCountMap(List<Map<String, String>> input, String targetName) {
 		
 		Map<String, Map<String, Map<String, Integer>>> map = new HashMap<String, Map<String, Map<String, Integer>>>();
 		
-		for (Restaurant r : input) {
-			Map<String, String> resMap = r.toMap();
+		// For each row
+		for (Map<String, String> resMap : input) {
 			
+			// For each column
 			for (Entry<String, String> entry : resMap.entrySet()) {
 				Map<String, Map<String, Integer>> waitMap = new HashMap<String, Map<String, Integer>>();
 				
@@ -22,11 +23,11 @@ public class MapMaker {
 					waitMap = map.get(entry.getKey());
 				}
 				
-				if (resMap.get("wait").equals("true")) {
+				if (resMap.get(targetName).equals("true")) {
 					Map<String, Integer> valMap = new HashMap<String, Integer>();
 
-					if (waitMap.containsKey("will wait")) {
-						valMap = waitMap.get("will wait");
+					if (waitMap.containsKey(targetName)) {
+						valMap = waitMap.get(targetName);
 					}
 					
 					if (valMap.containsKey(entry.getValue())) {
@@ -36,14 +37,14 @@ public class MapMaker {
 						valMap.put(entry.getValue(), 1);
 					}
 					
-					waitMap.put("will wait", valMap);
+					waitMap.put(targetName, valMap);
 					map.put(entry.getKey(), waitMap);
 				
 				} else {
 					Map<String, Integer> valMap = new HashMap<String, Integer>();
 
-					if (waitMap.containsKey("will not wait")) {
-						valMap = waitMap.get("will not wait");
+					if (waitMap.containsKey("Not " + targetName)) {
+						valMap = waitMap.get("Not " + targetName);
 					}
 					
 					if (valMap.containsKey(entry.getValue())) {
@@ -53,7 +54,7 @@ public class MapMaker {
 						valMap.put(entry.getValue(), 1);
 					}
 					
-					waitMap.put("will not wait", valMap);
+					waitMap.put("Not " + targetName, valMap);
 					map.put(entry.getKey(), waitMap);
 				}
 			}
