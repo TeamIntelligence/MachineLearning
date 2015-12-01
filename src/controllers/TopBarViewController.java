@@ -11,7 +11,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 
 import models.AbstractViewModel;
-import models.ZeroRModel;
 import services.CsvReader;
 import views.BodyView;
 import views.TopBarView;
@@ -37,35 +36,28 @@ public class TopBarViewController implements ActionListener{
 		JButton 		  openFileBtn    = view.getOpenFileBtn();
 		JComboBox<String> columnSelector = view.getColumnSelector();
 		
-		// Handle open button action.
+		// Handle open file button action.
 		if (e.getSource() == openFileBtn) {
+			// Show a file chooser dialog
 		    JFileChooser fileChooser = view.getFileChooser();
 			int returnVal = fileChooser.showOpenDialog(view);
 
+			// If a value is selected
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				// Get the filepath and read the csv
 				File file = fileChooser.getSelectedFile();
 				model = (new CsvReader(file.getPath())).readCsv();
 				ArrayList<String> values = new ArrayList<String>(model.getColumns().keySet());
 				
+				// Create a list for the combobox
 				values.add(0, "Select a column");
 				columnSelector.setModel(new DefaultComboBoxModel(values.toArray()));
 				columnSelector.setVisible(true);
-				
-				/*
-				Map<String, Map<String, Map<String, Integer>>> counts = MapMaker.makeCountMap(model.getData(), "wait");
-				for (Entry<String, Map<String, Map<String, Integer>>> entry : counts.entrySet()) {
-					logTextArea.append(entry.getKey() +  "\n");
-					for (Entry<String, Map<String, Integer>> wait : entry.getValue().entrySet()) {
-						logTextArea.append("\t" + wait + "\n");
-					}
-				}
-				*/
-			} /*else {
-				logTextArea.append("Open command cancelled by user.\n");
-			}
-			
-			logTextArea.setCaretPosition(logTextArea.getDocument().getLength());*/
-		} else if(e.getSource() == columnSelector) {
+			} 
+		} 
+		// If the column selector is changed
+		else if(e.getSource() == columnSelector) {
+			// Get the selected value
 			String value = (String) columnSelector.getSelectedItem();
 			
 			// If the user don't know we the target column, use the last column
@@ -73,6 +65,7 @@ public class TopBarViewController implements ActionListener{
 				value = columnSelector.getItemAt(columnSelector.getItemCount()-1);
 			}
 			
+			// Set the target column in the model and refresh all the layouts
 			model.setTargetColumn(value);
 			bodyView.setModel(model);
 		}

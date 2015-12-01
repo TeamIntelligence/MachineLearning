@@ -20,8 +20,9 @@ public class BodyView extends JTabbedPane implements ViewInterface  {
 	public void createLayout() {
 		removeAll();
 		
-		zeroRView = new ZeroRView(); 
+		zeroRView = new ZeroRView();
 		
+		// Build the layouts
 		this.addTab("ZeroR", zeroRView);
 		this.addTab("OneR", new ZeroRView());
 		this.addTab("Statistical Modeling", new ZeroRView());
