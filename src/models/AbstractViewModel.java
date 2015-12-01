@@ -6,9 +6,9 @@ import java.util.Map;
 public class AbstractViewModel {
 
 	private List<Map<String, String>> data;
-	private List<String> columns;
+	private Map<String, List<String>> columns;
 	
-	public AbstractViewModel(List<Map<String, String>> data, List<String> columns) {
+	public AbstractViewModel(List<Map<String, String>> data, Map<String, List<String>> columns) {
 		this.data = data;
 		this.columns = columns;
 	}
@@ -17,7 +17,7 @@ public class AbstractViewModel {
 		return data;
 	}
 
-	public List<String> getColumns() {
+	public Map<String, List<String>> getColumns() {
 		return columns;
 	}
 
@@ -25,7 +25,7 @@ public class AbstractViewModel {
 		this.data = data;
 	}
 
-	public void setColumns(List<String> columns) {
+	public void setColumns(Map<String, List<String>> columns) {
 		this.columns = columns;
 	}
 }

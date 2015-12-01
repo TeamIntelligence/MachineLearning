@@ -5,9 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import models.AbstractViewModel;
 
@@ -27,7 +29,7 @@ public class CsvReader {
 
 	public AbstractViewModel readCsv() {
 		List<Map<String, String>> data = new ArrayList<Map<String, String>>();
-		List<String> columns = new ArrayList<String>();
+		Map<String, List<String>> columns = new HashMap<String, List<String>>();
 		
 		
 		BufferedReader br = null;
@@ -46,7 +48,7 @@ public class CsvReader {
 				
 				if(firstRow) {
 					for(String colName : args) {
-						columns.add(colName);
+						columns.put(colName, new ArrayList<String>());
 					}
 					
 					firstRow = false;
@@ -54,13 +56,26 @@ public class CsvReader {
 				} 
 				
 				int j = 0;
-				for(String colName : columns) {
+				for(Entry<String, List<String>> entry : columns.entrySet()) {
+					String colName = entry.getKey();
+					ArrayList<String> values = (ArrayList<String>) entry.getValue();
+					
+					if(!values.contains(args[j])) {
+						values.add(args[j]);
+					}
+					
 					row.put(colName, args[j]);
 					j++;
 				}
 				
 				data.add(row);
 			}
+			
+			for(Entry<String, List<String>> cols : columns.entrySet()) {
+				Collections.sort(cols.getValue());
+			}
+			
+			System.out.println(columns);
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
