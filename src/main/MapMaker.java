@@ -23,7 +23,7 @@ public class MapMaker {
 					waitMap = map.get(entry.getKey());
 				}
 				
-				if (resMap.get(targetName).equals("true")) {
+				if (resMap.get(targetName).equals("yes")) {
 					Map<String, Integer> valMap = new HashMap<String, Integer>();
 
 					if (waitMap.containsKey(targetName)) {
