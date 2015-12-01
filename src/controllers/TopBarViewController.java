@@ -13,6 +13,7 @@ import javax.swing.JFileChooser;
 import models.AbstractViewModel;
 import models.ZeroRModel;
 import services.CsvReader;
+import views.BodyView;
 import views.TopBarView;
 
 public class TopBarViewController implements ActionListener{
@@ -20,8 +21,13 @@ public class TopBarViewController implements ActionListener{
 	private TopBarView 			view;
 	private AbstractViewModel 	model;
 	
-	public TopBarViewController(TopBarView view) {
-		this.view = view;
+    // Reference to other view
+    private BodyView 			bodyView;
+	
+	public TopBarViewController(TopBarView view, BodyView bodyView) {
+		this.view 		= view;
+		this.bodyView 	= bodyView;
+		
 		view.getOpenFileBtn().addActionListener(this);
 		view.getColumnSelector().addActionListener(this);
 	}
@@ -38,8 +44,7 @@ public class TopBarViewController implements ActionListener{
 
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
-				CsvReader csvReader = new CsvReader(file.getPath());
-				model = new ZeroRModel(csvReader.readCsv());
+				model = (new CsvReader(file.getPath())).readCsv();
 				ArrayList<String> values = new ArrayList<String>(model.getColumns().keySet());
 				
 				values.add(0, "Select a column");
@@ -63,14 +68,13 @@ public class TopBarViewController implements ActionListener{
 		} else if(e.getSource() == columnSelector) {
 			String value = (String) columnSelector.getSelectedItem();
 			
-			// If the user dont know we the target column, use the last column
+			// If the user don't know we the target column, use the last column
 			if(value.equals("Select a column")) {
 				value = columnSelector.getItemAt(columnSelector.getItemCount()-1);
 			}
 			
-			
-			
-			System.out.println(value);
+			model.setTargetColumn(value);
+			bodyView.setModel(model);
 		}
 		
 	}

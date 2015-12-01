@@ -9,9 +9,10 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
+import models.AbstractViewModel;
 import controllers.TopBarViewController;
 
-public class TopBarView extends JPanel {
+public class TopBarView extends JPanel implements ViewInterface  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -23,15 +24,17 @@ public class TopBarView extends JPanel {
     private JComboBox<String> 	columnSelector;
     
     
-    public TopBarView() {
+    public TopBarView(BodyView bodyView) {
 		super(new FlowLayout());
     	
-    	this.createGui();
-
-		this.controller = new TopBarViewController(this); 
+    	this.createLayout();
+		this.controller = new TopBarViewController(this, bodyView); 
     }
-    
-    private void createGui() {
+
+	@Override
+    public void createLayout() {
+		removeAll();
+		
         //Create a file chooser
         fileChooser = new JFileChooser();
         File workingDirectory = new File(System.getProperty("user.dir") + "/resources");
@@ -43,6 +46,9 @@ public class TopBarView extends JPanel {
         
         add(openFileBtn, BorderLayout.WEST);
         add(columnSelector, BorderLayout.EAST);
+		
+		repaint();
+		revalidate();
     }
 
 	public static long getSerialversionuid() {
@@ -63,6 +69,18 @@ public class TopBarView extends JPanel {
 
 	public JComboBox<String> getColumnSelector() {
 		return columnSelector;
+	}
+	
+	@Override
+	public void refresh() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setModel(AbstractViewModel baseData) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

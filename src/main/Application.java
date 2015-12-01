@@ -37,9 +37,11 @@ public class Application {
         JPanel mainLayout = new JPanel();
         mainLayout.setLayout(new BorderLayout());
         
+        BodyView bodyView = new BodyView();
+        
         //Add content to the window.
-        mainLayout.add(new TopBarView(), BorderLayout.PAGE_START);
-        mainLayout.add(new BodyView(), BorderLayout.CENTER);
+        mainLayout.add(new TopBarView(bodyView), BorderLayout.PAGE_START);
+        mainLayout.add(bodyView, BorderLayout.CENTER);
         
         frame.add(mainLayout);
         

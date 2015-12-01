@@ -2,15 +2,10 @@ package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import models.ZeroRModel;
-import services.CsvReader;
 import views.ZeroRView;
 
 public class ZeroRController implements ActionListener {
@@ -18,8 +13,9 @@ public class ZeroRController implements ActionListener {
 	private ZeroRModel model;
 	private ZeroRView view;
 	
-	public ZeroRController(ZeroRView view) {
+	public ZeroRController(ZeroRView view, ZeroRModel model) {
 		this.view = view;
+		this.model = model;
 	}
 
 	@Override

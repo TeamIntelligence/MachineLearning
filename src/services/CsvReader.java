@@ -30,7 +30,7 @@ public class CsvReader {
 	public AbstractViewModel readCsv() {
 		List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 		Map<String, List<String>> columns = new HashMap<String, List<String>>();
-		
+		List<String> cols = new ArrayList<String>();
 		
 		BufferedReader br = null;
 		String line = "";
@@ -48,6 +48,7 @@ public class CsvReader {
 				
 				if(firstRow) {
 					for(String colName : args) {
+						cols.add(colName);
 						columns.put(colName, new ArrayList<String>());
 					}
 					
@@ -56,9 +57,8 @@ public class CsvReader {
 				} 
 				
 				int j = 0;
-				for(Entry<String, List<String>> entry : columns.entrySet()) {
-					String colName = entry.getKey();
-					ArrayList<String> values = (ArrayList<String>) entry.getValue();
+				for(String colName : cols) {
+					ArrayList<String> values = (ArrayList<String>) columns.get(colName);
 					
 					if(!values.contains(args[j])) {
 						values.add(args[j]);
@@ -71,12 +71,9 @@ public class CsvReader {
 				data.add(row);
 			}
 			
-			for(Entry<String, List<String>> cols : columns.entrySet()) {
-				Collections.sort(cols.getValue());
+			for(Entry<String, List<String>> uniqueCols : columns.entrySet()) {
+				Collections.sort(uniqueCols.getValue());
 			}
-			
-			System.out.println(columns);
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
