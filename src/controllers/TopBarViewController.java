@@ -9,6 +9,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 
 import models.AbstractViewModel;
 import services.CsvReader;
@@ -29,12 +30,17 @@ public class TopBarViewController implements ActionListener{
 		
 		view.getOpenFileBtn().addActionListener(this);
 		view.getColumnSelector().addActionListener(this);
+		view.getValueSelector().addActionListener(this);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton 		  openFileBtn    = view.getOpenFileBtn();
+		JLabel 			  columnSelectorLabel = view.getColumnSelectorLabel();
 		JComboBox<String> columnSelector = view.getColumnSelector();
+		JLabel 			  valueSelectorLabel = view.getValueSelectorLabel();
+		JComboBox<String> valueSelector  = view.getValueSelector();
+
 		
 		// Handle open file button action.
 		if (e.getSource() == openFileBtn) {
@@ -52,6 +58,7 @@ public class TopBarViewController implements ActionListener{
 				// Create a list for the combobox
 				values.add(0, "Select a column");
 				columnSelector.setModel(new DefaultComboBoxModel(values.toArray()));
+				columnSelectorLabel.setVisible(true);
 				columnSelector.setVisible(true);
 			} 
 		} 
@@ -67,6 +74,28 @@ public class TopBarViewController implements ActionListener{
 			
 			// Set the target column in the model and refresh all the layouts
 			model.setTargetColumn(value);
+			bodyView.setModel(model);
+			
+			ArrayList<String> values = new ArrayList<String>(model.getColumns().get(value));
+			values.add(0, "Select a column");
+			
+			valueSelector.setModel(new DefaultComboBoxModel(values.toArray()));
+			valueSelectorLabel.setVisible(true);
+			valueSelector.setVisible(true);
+		}
+		
+		// If the value selector is changed
+		else if(e.getSource() == valueSelector) {
+			// Get the selected value
+			String value = (String) columnSelector.getSelectedItem();
+			
+			// If the user don't know we the target column, use the last column
+			if(value.equals("Select a column")) {
+				value = valueSelector.getItemAt(valueSelector.getItemCount()-1);
+			}
+			
+			// Set the target column in the model and refresh all the layouts
+			model.setTargetValue(value);
 			bodyView.setModel(model);
 		}
 		

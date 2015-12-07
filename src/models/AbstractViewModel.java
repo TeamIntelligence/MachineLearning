@@ -8,7 +8,9 @@ public class AbstractViewModel {
 	private List<Map<String, String>> data;
 	private Map<String, List<String>> columns;
 	private String targetColumn;
-	
+	private String targetValue;
+
+
 	public AbstractViewModel(List<Map<String, String>> data, Map<String, List<String>> columns) {
 		this.data = data;
 		this.columns = columns;
@@ -42,5 +44,13 @@ public class AbstractViewModel {
 
 	public void setTargetColumn(String targetColumn) {
 		this.targetColumn = targetColumn;
+	}
+	
+	public String getTargetValue() {
+		return targetValue;
+	}
+
+	public void setTargetValue(String targetValue) {
+		this.targetValue = targetValue;
 	}
 }

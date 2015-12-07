@@ -9,6 +9,7 @@ public class BodyView extends JTabbedPane implements ViewInterface  {
 	private static final long serialVersionUID = 1L;
 	
 	private ZeroRView zeroRView;
+	private OneRView  oneRView;
 	
 	public BodyView() {
 		super();
@@ -21,10 +22,10 @@ public class BodyView extends JTabbedPane implements ViewInterface  {
 		removeAll();
 		
 		zeroRView = new ZeroRView();
-		
+		oneRView  = new OneRView();
 		// Build the layouts
 		this.addTab("ZeroR", zeroRView);
-		this.addTab("OneR", new ZeroRView());
+		this.addTab("OneR", new OneRView());
 		this.addTab("Statistical Modeling", new ZeroRView());
 		this.addTab("Decision Tree", new ZeroRView());
 		
@@ -40,5 +41,6 @@ public class BodyView extends JTabbedPane implements ViewInterface  {
 	@Override
 	public void setModel(AbstractViewModel baseData) {
 		this.zeroRView.setModel(baseData);
+		this.oneRView.setModel(baseData);
 	}
 }

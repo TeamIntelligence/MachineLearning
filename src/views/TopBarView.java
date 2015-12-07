@@ -7,6 +7,7 @@ import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import models.AbstractViewModel;
@@ -22,6 +23,11 @@ public class TopBarView extends JPanel implements ViewInterface  {
     private JButton 	 		openFileBtn;
     private JFileChooser 		fileChooser;
     private JComboBox<String> 	columnSelector;
+    private JLabel				columnSelectorLabel;
+    private JComboBox<String> 	valueSelector;
+    private JLabel				valueSelectorLabel;
+
+
     
     
     public TopBarView(BodyView bodyView) {
@@ -41,11 +47,21 @@ public class TopBarView extends JPanel implements ViewInterface  {
         fileChooser.setCurrentDirectory(workingDirectory);
         openFileBtn = new JButton("Open a File...");
         
+        columnSelectorLabel = new JLabel("Select the target column");
+        columnSelectorLabel.setVisible(false);
         columnSelector = new JComboBox<String>();
         columnSelector.setVisible(false);
         
+        valueSelectorLabel = new JLabel("Select the target value");
+        valueSelectorLabel.setVisible(false);
+        valueSelector = new JComboBox<String>();
+        valueSelector.setVisible(false);
+        
         add(openFileBtn, BorderLayout.WEST);
+        add(columnSelectorLabel, BorderLayout.EAST);
         add(columnSelector, BorderLayout.EAST);
+        add(valueSelectorLabel);
+        add(valueSelector);
 		
 		repaint();
 		revalidate();
@@ -69,6 +85,18 @@ public class TopBarView extends JPanel implements ViewInterface  {
 
 	public JComboBox<String> getColumnSelector() {
 		return columnSelector;
+	}
+	
+	public JComboBox<String> getValueSelector() {
+		return valueSelector;
+	}
+	
+	public JLabel getColumnSelectorLabel() {
+		return columnSelectorLabel;
+	}
+
+	public JLabel getValueSelectorLabel() {
+		return valueSelectorLabel;
 	}
 	
 	@Override
