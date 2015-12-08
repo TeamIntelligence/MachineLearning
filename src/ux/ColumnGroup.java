@@ -20,7 +20,7 @@ import javax.swing.table.TableColumn;
  * @author Nobuo Tamemasa
  */
 
-class ColumnGroup {
+public class ColumnGroup {
 	protected TableCellRenderer renderer;
 	protected Vector v;
 	protected String text;

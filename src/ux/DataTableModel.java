@@ -9,6 +9,10 @@ public class DataTableModel extends DefaultTableModel {
 	public DataTableModel(Object[][] data, Object[] colNames) {
 		super(data, colNames);
 	}
+	
+	public DataTableModel() {
+		super();
+	}
 
 	public boolean isCellEditable(int row, int column) {
 		return false;

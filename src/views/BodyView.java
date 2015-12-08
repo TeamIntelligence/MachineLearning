@@ -23,9 +23,10 @@ public class BodyView extends JTabbedPane implements ViewInterface  {
 		
 		zeroRView = new ZeroRView();
 		oneRView  = new OneRView();
+		
 		// Build the layouts
 		this.addTab("ZeroR", zeroRView);
-		this.addTab("OneR", new OneRView());
+		this.addTab("OneR",   oneRView);
 		this.addTab("Statistical Modeling", new ZeroRView());
 		this.addTab("Decision Tree", new ZeroRView());
 		

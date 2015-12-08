@@ -7,16 +7,24 @@ import java.util.Map.Entry;
 
 public class OneRModel extends AbstractViewModel {
 	private AbstractViewModel 	 							baseData;
-	private Map<String, Integer> 							counts;
+	private Integer				 							uniqueValuesCount;
 	private Map<String, Double>  							probs;
 	private double 				 							highestProb;
 	private List<String> 		 							highestProbs;
 	private Map<String, Map<String, Map<String, Integer>>>  oneRMap;
 	
-	public Map<String, Integer> getCounts() {
-		return counts;
+	public OneRModel(List<Map<String, String>> data, Map<String, List<String>> columns) {
+		super(data, columns);
+		this.uniqueValuesCount = 0;
 	}
-
+	
+	public OneRModel(AbstractViewModel baseData) {
+		super(baseData.getData(), baseData.getColumns());
+		this.uniqueValuesCount = 0;
+		this.baseData = baseData;
+	}
+	
+	
 	public void createOneRMap() {
 		
 		Map<String, List<String>> columns = this.getColumns();
@@ -41,6 +49,7 @@ public class OneRModel extends AbstractViewModel {
 				Map<String, Integer> predictorValues = new HashMap<String, Integer>();
 				
 				for(String targetValue : targetColumnValues){
+					this.uniqueValuesCount++;
 					predictorValues.put(targetValue, 0);
 				}
 				cols.put(val, predictorValues);
@@ -64,36 +73,11 @@ public class OneRModel extends AbstractViewModel {
 			}
 		}
 		
-		
 		this.setOneRMap(result);
 	}
-	
-	public void setCounts(Map<String, Integer> counts) {
-		this.counts = counts;
-	}
 
-	public Map<String, Double> getProbs() {
-		return probs;
-	}
-
-	public void setProbs(Map<String, Double> probs) {
-		this.probs = probs;
-	}
-
-	public double getHighestProb() {
-		return highestProb;
-	}
-
-	public void setHighestProb(double highestProb) {
-		this.highestProb = highestProb;
-	}
-
-	public List<String> getHighestProbs() {
-		return highestProbs;
-	}
-
-	public void setHighestProbs(List<String> highestProbs) {
-		this.highestProbs = highestProbs;
+	public Integer getUniqueValuesCount() {
+		return uniqueValuesCount;
 	}
 
 	public Map<String, Map<String, Map<String, Integer>>> getOneRMap() {
@@ -106,15 +90,6 @@ public class OneRModel extends AbstractViewModel {
 
 	public AbstractViewModel getBaseData() {
 		return baseData;
-	}
-
-	public OneRModel(List<Map<String, String>> data, Map<String, List<String>> columns) {
-		super(data, columns);
-	}
-	
-	public OneRModel(AbstractViewModel baseData) {
-		super(baseData.getData(), baseData.getColumns());
-		this.baseData = baseData;
 	}
 	
 	public void setBaseData(AbstractViewModel baseData) {

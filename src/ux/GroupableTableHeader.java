@@ -13,11 +13,16 @@ import javax.swing.table.TableColumnModel;
  * @version 1.0 10/20/98
  * @author Nobuo Tamemasa
  */
-
 public class GroupableTableHeader extends JTableHeader {
 	private static final String uiClassID = "GroupableTableHeaderUI";
 	protected Vector columnGroups = null;
-
+	
+	public GroupableTableHeader(JTableHeader jtableHeader){
+		super(jtableHeader.getColumnModel());
+		setUI(new GroupableTableHeaderUI());
+		setReorderingAllowed(false);
+	}
+	
 	public GroupableTableHeader(TableColumnModel model) {
 		super(model);
 		setUI(new GroupableTableHeaderUI());
