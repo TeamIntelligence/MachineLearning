@@ -61,12 +61,4 @@ public class MapMaker {
 		}
 		return map;
 	}
-
-//	public static Map<String, Map<String, String>> makeProbabilityMap(Map<String, Map<String, Integer>> input) {
-//		Map<String, Map<String, String>> map = new HashMap<String, Map<String, String>>();
-//
-//		for (Entry<String, Map<String, Integer>> entry : input.entrySet()) {
-//		}
-//		return map;
-//	}
 }
