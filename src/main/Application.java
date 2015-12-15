@@ -2,6 +2,8 @@ package main;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,8 +14,11 @@ import views.BodyView;
 import views.TopBarView;
 
 public class Application {
-    
+	
+public static final DecimalFormat df = new DecimalFormat("0.000");
+
 	public static void main(String[] args){
+		df.setRoundingMode(RoundingMode.CEILING);
 	    //Schedule a job for the event dispatch thread:
         //creating and showing this application's GUI.
         SwingUtilities.invokeLater(new Runnable() {

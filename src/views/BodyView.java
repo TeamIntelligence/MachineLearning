@@ -45,5 +45,6 @@ public class BodyView extends JTabbedPane implements ViewInterface  {
 	public void setModel(AbstractViewModel baseData) {
 		this.zeroRView.setModel(baseData);
 		this.oneRView.setModel(baseData);
+		this.statModel.setModel(this.oneRView.getModel());
 	}
 }

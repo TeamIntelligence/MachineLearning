@@ -72,7 +72,6 @@ public class OneRModel extends AbstractViewModel {
 			}
 			
 		}
-		
 		this.setOneRMap(result);
 	}
 	

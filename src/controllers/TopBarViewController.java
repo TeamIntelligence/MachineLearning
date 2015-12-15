@@ -35,12 +35,11 @@ public class TopBarViewController implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton 		  openFileBtn    = view.getOpenFileBtn();
-		JLabel 			  columnSelectorLabel = view.getColumnSelectorLabel();
-		JComboBox<String> columnSelector = view.getColumnSelector();
-		JLabel 			  valueSelectorLabel = view.getValueSelectorLabel();
-		JComboBox<String> valueSelector  = view.getValueSelector();
-
+		JButton 		  openFileBtn    		= view.getOpenFileBtn();
+		JLabel 			  columnSelectorLabel 	= view.getColumnSelectorLabel();
+		JComboBox<String> columnSelector 		= view.getColumnSelector();
+		JLabel 			  valueSelectorLabel 	= view.getValueSelectorLabel();
+		JComboBox<String> valueSelector  		= view.getValueSelector();
 		
 		// Handle open file button action.
 		if (e.getSource() == openFileBtn) {

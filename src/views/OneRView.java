@@ -31,7 +31,7 @@ import ux.GroupableTableHeader;
 public class OneRView extends JPanel implements ViewInterface{
 	private static final long 	serialVersionUID = 1L;
 	private OneRModel 			model;
-	private final String 		total = "total";
+	public static final String	total = "total";
 	
 	public OneRView(){
 		super(new BorderLayout());
@@ -289,5 +289,9 @@ public class OneRView extends JPanel implements ViewInterface{
 	public void setModel(AbstractViewModel baseData) {
 		model.setBaseData(baseData);
 		refresh();
+	}
+	
+	public OneRModel getModel(){
+		return this.model;
 	}
 }
