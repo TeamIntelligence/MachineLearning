@@ -262,7 +262,6 @@ public class OneRView extends JPanel implements ViewInterface{
 				}
 			}
 			text = text.substring(0, text.length() - "<br>".length()) + "</html>";
-			System.out.println(text);
 			conclusionOneR.setText(text);
 
 			//create table
