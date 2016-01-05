@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import services.MapMaker;
+
 public class ZeroRModel extends AbstractViewModel {
 	
 	private AbstractViewModel 	 baseData;
@@ -15,7 +17,7 @@ public class ZeroRModel extends AbstractViewModel {
 	private List<String> 		 highestProbs;
 	
 	public ZeroRModel(AbstractViewModel baseData) {
-		super(baseData.getData(), baseData.getColumns());
+		super(baseData.getData(), baseData.getColumns(null));
 		
 		this.baseData = baseData;
 	}
@@ -24,27 +26,8 @@ public class ZeroRModel extends AbstractViewModel {
 		super(data, columns);
 	}
 	
-	/**
-	 *	Does the count calculation 
-	 */
 	public void createCountMap() {
-		String targetColumn = this.getTargetColumn();
-		List<String> uniqueValues = this.getColumns().get(targetColumn);
-		List<Map<String, String>> data = this.getData();
-		Map<String, Integer> result = new HashMap<String, Integer>();
-		
-		// Create 0 counts for all the unique values of a column
-		for(String value : uniqueValues) {
-			result.put(value, 0);
-		}
-		
-		// Make a count for each unique value
-		for(Map<String, String> row : data) {
-			String val = row.get(targetColumn);
-			result.put(val, result.get(val) + 1);
-		}
-		
-		this.counts = result;
+		this.counts = MapMaker.createTargetColCountMap(this.getData(), this.getColumns(null), this.getTargetColumn());
 	}
 	
 	/**
@@ -123,7 +106,7 @@ public class ZeroRModel extends AbstractViewModel {
 	public void setBaseData(AbstractViewModel baseData) {
 		this.baseData = baseData;
 		
-		this.setColumns(baseData.getColumns());
+		this.setColumns(baseData.getColumns(null));
 		this.setData(baseData.getData());
 		this.setTargetColumn(baseData.getTargetColumn());
 	}

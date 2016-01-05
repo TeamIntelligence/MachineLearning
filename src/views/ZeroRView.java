@@ -44,7 +44,7 @@ public class ZeroRView extends JPanel implements ViewInterface {
 			Map<String, Double> probs 	= this.model.getProbs();
 			
 			// Get all the columns
-			ArrayList<String> columns = new ArrayList<String>(this.model.getColumns().get(targetColumn));
+			ArrayList<String> columns = new ArrayList<String>(this.model.getColumns(null).get(targetColumn));
 			columns.add(0, "");
 			Object[] colNames = columns.toArray();
 			Object[][] data = new Object[2][counts.size() + 1];
@@ -55,7 +55,7 @@ public class ZeroRView extends JPanel implements ViewInterface {
 			
 			// Add the values to the data object for the table
 			int i = 1;
-			for(String colName : this.model.getColumns().get(targetColumn)) {
+			for(String colName : this.model.getColumns(null).get(targetColumn)) {
 				data[0][i] = counts.get(colName);
 				data[1][i] = probs.get(colName);
 				i++;

@@ -1,5 +1,6 @@
 package models;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -30,7 +31,16 @@ public class AbstractViewModel {
 		return data;
 	}
 
-	public Map<String, List<String>> getColumns() {
+	public Map<String, List<String>> getColumns(List<Map<String, String>> data) {
+		if(data != null) {
+			Map<String, List<String>> newColumns = new HashMap<String, List<String>>();
+			for(Entry<String, String> entry : data.get(0).entrySet()) {
+				newColumns.put(entry.getKey(), columns.get(entry.getKey()));
+			}
+			
+			return newColumns;
+		}
+		
 		return columns;
 	}
 

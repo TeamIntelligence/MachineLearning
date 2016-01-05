@@ -2,6 +2,7 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,11 +44,11 @@ public class StatisticalModelView extends JPanel implements ViewInterface{
 		if(this.model != null){
 			
 			JPanel topContainer = new JPanel(new BorderLayout());
-			selectorContainer = new JPanel(new GridLayout(2, this.model.getColumns().size()));
+			selectorContainer = new JPanel(new GridLayout(2, this.model.getColumns(null).size()));
 			
 			String targetColumn = this.model.getTargetColumn();
 			
-			for(Entry<String, List<String>> col : this.model.getColumns().entrySet()){
+			for(Entry<String, List<String>> col : this.model.getColumns(null).entrySet()){
 		        if (col.getKey().equals(targetColumn)){
 		        	continue;
 		        }
@@ -59,7 +60,7 @@ public class StatisticalModelView extends JPanel implements ViewInterface{
 		        selectorContainer.add(columnSelectorLabel);
 		        
 			}
-			for(Entry<String, List<String>> col : this.model.getColumns().entrySet()){
+			for(Entry<String, List<String>> col : this.model.getColumns(null).entrySet()){
 				if (col.getKey().equals(targetColumn)){
 		        	continue;
 		        }
@@ -67,7 +68,9 @@ public class StatisticalModelView extends JPanel implements ViewInterface{
 				JComboBox<String> columnSelector = new JComboBox<String>();	
 		        columnSelector.setActionCommand(col.getKey());
 		        
-		        List<String> vals = col.getValue();
+		        List<String> vals = new ArrayList<String>();
+		        vals.addAll(col.getValue());
+		        
 		        vals.add(0, noneSelected);
 		        columnSelector.setModel(new DefaultComboBoxModel(vals.toArray()));
 		        

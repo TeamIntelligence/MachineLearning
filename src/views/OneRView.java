@@ -74,7 +74,7 @@ public class OneRView extends JPanel implements ViewInterface{
 				}
 				
 				//initialize the columns
-				ArrayList<String> columns = new ArrayList<String>(this.model.getColumns().get(targetColumn));
+				ArrayList<String> columns = new ArrayList<String>(this.model.getColumns(null).get(targetColumn));
 				columns.add(0, "Predictor name");
 				columns.add(1, "Predictor value");
 				columns.add(total);

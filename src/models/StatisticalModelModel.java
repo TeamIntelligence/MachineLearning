@@ -15,7 +15,7 @@ public class StatisticalModelModel extends OneRModel {
 	private Map<String, Double> 		results;
 	
 	public StatisticalModelModel(AbstractViewModel baseData) {
-		super(baseData.getData(), baseData.getColumns());
+		super(baseData.getData(), baseData.getColumns(null));
 	}
 	
 	public StatisticalModelModel(List<Map<String, String>> data, Map<String, List<String>> columns) {
@@ -24,7 +24,7 @@ public class StatisticalModelModel extends OneRModel {
 	
 	public void createStatisticalModel(Map<String, String> valMap) {
 		String targetCol   										= this.getTargetColumn();
-		List<String> targetUniqueValues 						= this.getColumns().get(targetCol);
+		List<String> targetUniqueValues 						= this.getColumns(null).get(targetCol);
 		Map<String, Map<String, Map<String, Integer>>> oneRMap 	= this.getOneRMap();
 		double totalChance 										= 0.00;
 		int targetTotal 										= this.getBaseData().getData().size();

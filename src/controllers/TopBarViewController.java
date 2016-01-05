@@ -52,7 +52,7 @@ public class TopBarViewController implements ActionListener{
 				// Get the filepath and read the csv
 				File file = fileChooser.getSelectedFile();
 				model = (new CsvReader(file.getPath())).readCsv();
-				ArrayList<String> values = new ArrayList<String>(model.getColumns().keySet());
+				ArrayList<String> values = new ArrayList<String>(model.getColumns(null).keySet());
 				
 				// Create a list for the combobox
 				values.add(0, "Select a column");
@@ -75,7 +75,7 @@ public class TopBarViewController implements ActionListener{
 			model.setTargetColumn(value);
 			bodyView.setModel(model);
 			
-			ArrayList<String> values = new ArrayList<String>(model.getColumns().get(value));
+			ArrayList<String> values = new ArrayList<String>(model.getColumns(null).get(value));
 			values.add(0, "Select a column");
 			
 			valueSelector.setModel(new DefaultComboBoxModel(values.toArray()));
