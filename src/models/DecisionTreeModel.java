@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import services.MapEntry;
 import services.MapMaker;
@@ -14,9 +15,12 @@ public class DecisionTreeModel extends AbstractViewModel {
 	private AbstractViewModel 	 							baseData;
 	private Map<String, Map<String, Map<String, Integer>>>  totalCountMap;
 	private TreeNode										tree;
+    private Random 											randomGenerator;
 	
 	public DecisionTreeModel(List<Map<String, String>> data, Map<String, List<String>> columns) {
 		super(data, columns);
+		
+        randomGenerator = new Random();
 	}
 	
 	public DecisionTreeModel(AbstractViewModel baseData) {
@@ -141,13 +145,46 @@ public class DecisionTreeModel extends AbstractViewModel {
 		return null;
 	}
 	
-	private TreeNode BuildTree(List<Map<String, String>> data, String colName, String parentStepValue, Entry<String, Map<String, Integer>> values) {
+	private String getMostCommonTargetValue(Entry<String, Map<String, Integer>> values) {
+		int count = 0;
+		ArrayList<String> commonValues = new ArrayList<String>();
+		String commonTargetValue = "";
+		
+		if(values != null && values.getValue() != null) {
+			for(Entry<String, Integer> value : values.getValue().entrySet()) {
+				if(value.getKey().equals("total")) {
+					continue;
+				}
+				
+				if(value.getValue() > count) {
+					count = value.getValue();
+				}
+			}
+			System.out.println(values);
+			for(Entry<String, Integer> value : values.getValue().entrySet()) {
+				if(value.getKey().equals("total")) {
+					continue;
+				}
+				
+				if(value.getValue() == count) {
+					commonValues.add(value.getKey());
+				}
+			}
+			
+			int index 				 = randomGenerator.nextInt(commonValues.size());
+			commonTargetValue = commonValues.get(index);
+		}
+		
+		return commonTargetValue;
+	}
+	
+	private TreeNode BuildTree(List<Map<String, String>> data, String colName, String parentStepValue, Entry<String, Map<String, Integer>> values, String mostCommonValue) {
 		if(values != null && CheckAllValuesSame(colName, values.getKey())) {
 			return new TreeNode(parentStepValue, new MapEntry<String, Map<String, Map<String, Integer>>>(getColumnAllValue(values.getValue()), null));
 		}
 		
 		if(values != null && data.size() == 0)  {
-			return new TreeNode(parentStepValue, new MapEntry<String, Map<String, Map<String, Integer>>>("yes", null));
+			return new TreeNode(parentStepValue, new MapEntry<String, Map<String, Map<String, Integer>>>(mostCommonValue, null));
 		}
 		
 		
@@ -158,6 +195,7 @@ public class DecisionTreeModel extends AbstractViewModel {
 		}
 		
 		TreeNode rootNode = new TreeNode(parentStepValue, bestColumn);
+		String mostCommonTargetValue = getMostCommonTargetValue(values);
 		
 		for(Entry<String, Map<String, Integer>> nodeEntry : bestColumn.getValue().entrySet()) {
 			
@@ -175,7 +213,7 @@ public class DecisionTreeModel extends AbstractViewModel {
 				row.remove(bestColumn.getKey());
 			}
 			
-			rootNode.addNode(BuildTree(subset, bestColumn.getKey(), nodeEntry.getKey(), nodeEntry));
+			rootNode.addNode(BuildTree(subset, bestColumn.getKey(), nodeEntry.getKey(), nodeEntry, mostCommonTargetValue));
 		}
 		
 		return rootNode;
@@ -194,7 +232,7 @@ public class DecisionTreeModel extends AbstractViewModel {
 		this.setUniqueValuesCount();
 
 		this.totalCountMap = MapMaker.createTotalCountMap(this.getData(), this.getColumns(null), this.getTargetColumn());
-		this.setTree(BuildTree(this.getData(), this.getTargetColumn(), null, null));
+		this.setTree(BuildTree(this.getData(), this.getTargetColumn(), null, null, null));
 	}
 	
 	private double MathLog(double value, int base) {
